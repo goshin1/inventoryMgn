@@ -1,38 +1,149 @@
+/*
+#B1B2FF 진한파랑
+#AAC4FF 중간파랑
+#D2DAFF 연한파랑
+#EEF1FF 하양에 가까운 파랑
+*/
+
 .App {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+#title{
+  margin: 30px auto;
+  text-align: center;
+  border: 0px;
+  min-width: 200px;
+  font-size: 36px;
+  font-weight: bold;
+  transition: all 0.5s;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+
+#mainForm{
+  margin: 0px auto;
+  width: 650px;
+  height: 250px;
+  position: relative;
+  background-color: #EEF1FF;
+  border-radius: 30px;
+  font-size: 13px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+#mainForm input[type=text]{
+  float: right;
+  background-color: #EEF1FF;
+  border: none;
+  border-bottom: 1px solid #000000;
 }
 
-.App-link {
-  color: #61dafb;
+#mainForm input[type=date]{
+  float : right;
+  margin-left: 20px;
+  width: 170px;
+  height: 20px;
+  text-indent: 5px;
+  background-color: #EEF1FF;
+  border-radius: 5px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#mainForm input[type=file]{
+  margin-left: 20px;
+  width: 175px;
+  float: right;
+  font-size: 10px;
+}
+
+#mainForm input[type=submit]{
+  margin: 10px;
+  width: 100px;
+  height: 35px;
+  font-size: 18px;
+  font-weight: bold;
+  background-color: #B1B2FF;
+  color : #FFFFFF;
+  border: none;
+  border-radius: 5px;
+}
+
+#mainForm div{
+  width: 260px;
+  height: 200px;
+  float: left;
+}
+
+#leftForm{
+  margin: 10px 50px 30px 15px;
+
+}
+
+#rightForm{
+  margin: 10px 20px 30px 30px;
+}
+
+#rightForm img{
+  height: 100px;
+}
+
+
+/*테이블 영역 */
+
+#tableForm{
+  width: 90%;
+  margin: 50px auto;
+}
+
+#tableTap{
+  margin: 0;
+  width: 650px;
+  height: 30px;
+  line-height: 30px;
+  background-color: #EEF1FF;
+}
+
+#tableTap div{
+  cursor : pointer;
+  width: 50px;
+  float: left;
+}
+
+table{
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead th{
+  height: 30px;
+  background-color: #B1B2FF;
+}
+
+tbody input{
+  border : none;
+  width: 30px;
+}
+
+.pName{
+  border: none;
+  text-align: center;
+  width: 100px;
+  height: 50px;
+  font-size: 15px;
+}
+
+.uPrices, .prices, .vats{
+  width: 50px;
+  height: 60px;
+}
+
+tbody td, tbody input, tbody textarea{
+  background-color: #EEF1FF;
+}
+
+.totals{
+  width: 80px;
+  height: 60px;
+}
+
+.colorTd{
+  background-color: #B1B2FF;
 }
