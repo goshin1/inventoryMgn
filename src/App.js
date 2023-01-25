@@ -11,7 +11,9 @@ function InsertTitle(){
 // http://http://localhost:4000/invList json 서버 주소
 function InsertInv(){
   return (
-    <form id='mainForm'>
+    <form id='mainForm' onSubmit={(event)=>{
+      event.preventDefault();
+    }}>
         <div id='leftForm'>
           <p>제품명<input type='text' name='pName' placeholder=''/></p>
           <p>단가<input type='text' name='uPrice' placeholder=''/></p>
@@ -20,8 +22,12 @@ function InsertInv(){
         </div>
         <div id='rightForm'>
           <p>구입일자 <input type="date"></input></p>
-          <p id='test'>이미지 <input type="file" /></p>
-          <img src={ReactImg}/><br/>
+          <p id='test'>이미지 <input name='insertImg' type="file" onChange={(event)=>{
+            var filePath = event.target.value.split("\\");
+            var fileName = filePath[filePath.length - 1];
+            console.log(fileName);
+          }} /></p>
+          <img id='formImg' src={ReactImg}/><br/>
           <input type="submit" value="submit"/>
         </div>
     </form>);
@@ -83,6 +89,7 @@ function App() {
   const dispatch = useDispatch();
 
   var selMonth = useSelector(state=>{
+    console.log(state);
     return state.inventory.selMonth;
   })
   var selInvtory = useSelector(state=>{
