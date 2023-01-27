@@ -1,11 +1,5 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice} from "@reduxjs/toolkit";
 
-async function loadJson(){
-    const resp = await fetch("http://localhost:4000/invList");
-    const data = await resp.json().parse();
-    console.log(data);
-    return data.value;
-}
 
 const inventorySlice = createSlice({
     name : 'inventory',
@@ -13,7 +7,7 @@ const inventorySlice = createSlice({
         selMonth : 0,
         status : "welcome",
         test : [],
-        invList : loadJson()
+        invList : []
     },
     reducers :{
         up:(state, action)=>{
@@ -21,6 +15,9 @@ const inventorySlice = createSlice({
         },
         changeMonth : (state, action)=>{
             state.selMonth = action.payload;
+        },
+        initInvList : (state, action)=>{
+            state.invList = action.payload;
         }
     }
 })

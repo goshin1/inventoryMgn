@@ -47,11 +47,20 @@
   border-radius: 5px;
 }
 
+#mainForm input[type=button]{
+  width: 100px;
+  height: 30px;
+  
+  background-color: #B1B2FF;
+  color : #FFFFFF;
+}
+
 #mainForm input[type=file]{
-  margin-left: 20px;
+  /* margin-left: 20px;
   width: 175px;
   float: right;
-  font-size: 10px;
+  font-size: 10px; */
+  display: none;
 }
 
 #mainForm input[type=submit]{
@@ -64,6 +73,7 @@
   color : #FFFFFF;
   border: none;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 #mainForm div{
@@ -81,8 +91,10 @@
   margin: 10px 20px 30px 30px;
 }
 
-#rightForm img{
-  height: 100px;
+#rightForm p{
+  margin: 20px 0px;
+  text-align: left;
+  width: 260px;
 }
 
 
