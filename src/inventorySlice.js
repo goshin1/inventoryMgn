@@ -1,5 +1,31 @@
-import { createSlice} from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 
+const asyncInvenFetch = createAsyncThunk(
+    'inventory/asyncInvenFetch',
+    async(url) => {
+        const resp = await fetch(url);
+        const data = await resp.json();
+        return data;
+    }
+);
+
+const asyncAddItemFetch = createAsyncThunk(
+    'inventory/asyncInvenFetch',
+    async(url, obj) => {
+        fetch(url, {
+            method : "PUT",
+            headers : {
+                "Content-Type" : "application/json"
+            },body : JSON.stringify({
+                obj
+            }).then(res => {
+                if(res.ok){
+                    alert("성공 하였습니다.")
+                }
+            })
+        })
+    }
+);
 
 const inventorySlice = createSlice({
     name : 'inventory',
@@ -7,7 +33,8 @@ const inventorySlice = createSlice({
         selMonth : 0,
         status : "welcome",
         test : [],
-        invList : []
+        invList : [],
+        invStatus : 'Loading'
     },
     reducers :{
         up:(state, action)=>{
@@ -15,11 +42,22 @@ const inventorySlice = createSlice({
         },
         changeMonth : (state, action)=>{
             state.selMonth = action.payload;
-        },
-        initInvList : (state, action)=>{
-            state.invList = action.payload;
         }
+    },
+    extraReducers : (builder) => {
+        builder.addCase(asyncInvenFetch.pending, (state, action) => {
+            state.invStatus = 'Loading...';
+        });
+        builder.addCase(asyncInvenFetch.fulfilled, (state, action) => {
+            state.invStatus = 'Complelte';
+            state.invList = action.payload;
+        });
+        builder.addCase(asyncInvenFetch.rejected, (state, action) => {
+            state.invStatus = "Fail";
+        });
+        
     }
 })
 
 export default inventorySlice;
+export {asyncInvenFetch};
