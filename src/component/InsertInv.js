@@ -8,13 +8,12 @@ import useFetch from '../fetch/useFetch';
 
 
 export default function InsertInv(){
+    const [base, setBase] = useState(null);
     const selMonth = useSelector(state=>(state.inventory.selMonth));
-    const selInventory = useFetch(`http://localhost:3001/invList/${selMonth}`);
+    const selInventory = useFetch(`http://localhost:3001/invList/${selMonth}/`);
+    
     const dispatch = useDispatch();
-    console.log(selInventory.itemList);
-    function toDataURL(){
-
-    }
+    //console.log(selInventory);
 
     function onItem(event){
       event.preventDefault();
@@ -31,18 +30,29 @@ export default function InsertInv(){
         uPrice : Number(uPriceRef.current.value),
         price : Number(priceRef.current.value),
         vat : Number(vatRef.current.value),
-        img : insertImgRef.current.value
+        img : base
       };
-      console.log(obj);
-      if(obj.pName === ""){
+      if(obj.pName === "" || obj.uPrice === "" || obj.price === "" || obj.vat === ""){
         alert("제품명을 입력해주세요");
         return
       }
-      //  주소가 http://localhost:3001/invList/${selMonth} 물음표가 아닌 /로 하면 해당 객체만 오게 된다.
-      // 물음표는 해당조건의 객체"들을" 보내기 때문에 배열 /는 해당하는 객체를 리턴
-      // 만들어야 할 것은 이미지를 base64로 변경하여 json-server로 전달하고 다시 읽어오는 부분 
-      // xml, ajax 등 관련 개념도 공부
-      console.log(obj);
+      
+      selInventory.itemList.push(obj)
+      selInventory.nextPid += 1
+
+      
+      fetch(`http://localhost:3001/invList/${selMonth}`, {
+        method : "PUT",
+        headers : {
+          "Content-Type" : "application/json"
+        },
+        body : JSON.stringify(selInventory)
+      }).then(res => {
+        if(res.ok){
+          alert("상품이 추가 되었습니다.")
+        }
+      })
+        
       
     }
 
@@ -50,24 +60,30 @@ export default function InsertInv(){
     const uPriceRef = useRef(null)
     const priceRef = useRef(null);
     const vatRef = useRef(null);
-    const pDateRef = useRef(null);
-    const insertImgRef = useRef(null);
 
     return (
       <>
-        <p id='title'>재고관리</p>
+        <p id='title'>{ selMonth + 1}월 재고관리</p>
         <form id='mainForm' onSubmit={onItem}>
             <div id='leftForm'>
+              <p id='formTitle'>{ selMonth + 1 }월 물품 추가</p>
               <p>제품명<input type='text' name='pName' ref={pNameRef}/></p>
               <p>단가<input type='text' name='uPrice' ref={uPriceRef}/></p>
               <p>금액<input type='text' name='price' ref={priceRef}/></p>
               <p>부가세<input type='text' name='vat' ref={vatRef}/></p>
             </div>
             <div id='rightForm'>
-              <p>구입일자 <input type="date" name="pDate" ref={pDateRef}/></p>
               <p id='btnP'><label id='btn'>
                   Image Upload
-                  <input name='insertImg' type="file" ref={insertImgRef}/>
+                  <input name='insertImg' type="file" onChange={(event) => {
+                    let file = event.target.files[0];
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = () => {
+                      setBase(reader.result);
+                    }
+                    event.target.files = [];
+                  }}/>
                 </label>
               </p>
               

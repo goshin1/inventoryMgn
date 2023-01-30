@@ -63,6 +63,7 @@ function App() {
                 <th>금액</th>
                 <th>부가세</th>
                 <th>총괄금액</th>
+                <th>삭제</th>
               </tr>
             </thead>
             <InventoryBlock></InventoryBlock>
