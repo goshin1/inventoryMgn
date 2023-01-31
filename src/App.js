@@ -5,7 +5,9 @@ import inventorySlice from './inventorySlice';
 import uuid from 'react-uuid';
 import InsertInv from './component/InsertInv';
 import InventoryBlock from './component/InventoryBlock';
+import InventoryStats from './component/InventoryStats';
 import { asyncInvenFetch } from './inventorySlice';
+import { useEffect, useState } from 'react';
 
 
 function App() { 
@@ -15,6 +17,7 @@ function App() {
     return state.inventory.selMonth;
   })
 
+  var [mainContent, setMainContent] = useState(null);
   var dayBlock = [];
 
   for(var i = 0; i < 31; i++){
@@ -23,15 +26,37 @@ function App() {
   const inventory = useSelector(state=>{
     return state.inventory.invList;
   })
+
+  useEffect(()=>{
+    if(selMonth != 12){
+      setMainContent(
+        <table border="1px">
+              <thead>
+                <tr>
+                  <th>제품명</th>
+                  <th>재고</th>
+                  {dayBlock}
+                  <th>단가</th>
+                  <th>금액</th>
+                  <th>부가세</th>
+                  <th>총괄금액</th>
+                  <th>삭제</th>
+                </tr>
+              </thead>
+              <InventoryBlock></InventoryBlock>
+            </table>
+      );
+    } else {
+      setMainContent(
+        <div>
+          <InventoryStats></InventoryStats>
+        </div>
+      )
+    }
+  }, [selMonth]);
   
-  /* ctrl + s를 누를 경우 현재 상황이 저장되게 할 것
-  window.onkeydown = (event)=>{
-    event.preventDefault();
-    if(event.key === 's' && event.ctrlKey === true){
-      alert('SAVE');
-    } 
-  }
-  */
+  /* ctrl + s를 누를 경우 현재 상황이 저장되게 할 것*/
+  
 
   return (
     <div className="App">
@@ -51,23 +76,10 @@ function App() {
             <div style={selMonth === 9 ? {backgroundColor : '#B1B2FF'} : {backgroundColor : '#EEF1FF'}} onClick={()=>{dispatch(inventorySlice.actions.changeMonth(9)); dispatch(asyncInvenFetch(`http://localhost:3001/invList?id=9`))}}>10월</div>
             <div style={selMonth === 10 ? {backgroundColor : '#B1B2FF'} : {backgroundColor : '#EEF1FF'}} onClick={()=>{dispatch(inventorySlice.actions.changeMonth(10)); dispatch(asyncInvenFetch(`http://localhost:3001/invList?id=10`))}}>11월</div>
             <div style={selMonth === 11 ? {backgroundColor : '#B1B2FF'} : {backgroundColor : '#EEF1FF'}} onClick={()=>{dispatch(inventorySlice.actions.changeMonth(11)); dispatch(asyncInvenFetch(`http://localhost:3001/invList?id=11`))}}>12월</div>
-            <div>통계</div>
+            <div style={selMonth === 12 ? {backgroundColor : '#B1B2FF'} : {backgroundColor : '#EEF1FF'}} onClick={()=>{dispatch(inventorySlice.actions.changeMonth(12));}}>통계</div>
           </nav>
-          <table border="1px">
-            <thead>
-              <tr>
-                <th>제품명</th>
-                <th>재고</th>
-                {dayBlock}
-                <th>단가</th>
-                <th>금액</th>
-                <th>부가세</th>
-                <th>총괄금액</th>
-                <th>삭제</th>
-              </tr>
-            </thead>
-            <InventoryBlock></InventoryBlock>
-          </table>
+          {mainContent}
+          
         </form>
     </div>
   );

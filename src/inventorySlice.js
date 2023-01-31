@@ -9,23 +9,7 @@ const asyncInvenFetch = createAsyncThunk(
     }
 );
 
-const asyncAddItemFetch = createAsyncThunk(
-    'inventory/asyncInvenFetch',
-    async(url, obj) => {
-        fetch(url, {
-            method : "PUT",
-            headers : {
-                "Content-Type" : "application/json"
-            },body : JSON.stringify({
-                obj
-            }).then(res => {
-                if(res.ok){
-                    alert("성공 하였습니다.")
-                }
-            })
-        })
-    }
-);
+
 
 const inventorySlice = createSlice({
     name : 'inventory',

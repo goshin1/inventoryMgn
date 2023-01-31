@@ -1,6 +1,4 @@
-import {useSelector, useDispatch} from 'react-redux';
-import asyncInvenFetch from '../inventorySlice';
-import uuid from 'react-uuid';
+import {useSelector} from 'react-redux';
 import React from 'react';
 import { useRef, useState } from "react";
 import useFetch from '../fetch/useFetch';
@@ -10,9 +8,8 @@ import useFetch from '../fetch/useFetch';
 export default function InsertInv(){
     const [base, setBase] = useState(null);
     const selMonth = useSelector(state=>(state.inventory.selMonth));
-    const selInventory = useFetch(`http://localhost:3001/invList/${selMonth}/`);
+    const selInventory = useFetch(`http://localhost:3001/invList/${selMonth != 12 ? selMonth : 0}/`);
     
-    const dispatch = useDispatch();
     //console.log(selInventory);
 
     function onItem(event){
@@ -37,9 +34,8 @@ export default function InsertInv(){
         return
       }
       
-      selInventory.itemList.push(obj)
-      selInventory.nextPid += 1
-
+      selInventory.itemList.push(obj);
+      selInventory.nextPid += 1;
       
       fetch(`http://localhost:3001/invList/${selMonth}`, {
         method : "PUT",
@@ -60,13 +56,14 @@ export default function InsertInv(){
     const uPriceRef = useRef(null)
     const priceRef = useRef(null);
     const vatRef = useRef(null);
+    const imgRef = useRef(null);
 
     return (
       <>
-        <p id='title'>{ selMonth + 1}월 재고관리</p>
+        <p id='title'>{ selMonth != 12 ? selMonth + 1 + "월 재고관리" : "통계정보" }</p>
         <form id='mainForm' onSubmit={onItem}>
             <div id='leftForm'>
-              <p id='formTitle'>{ selMonth + 1 }월 물품 추가</p>
+              <p id='formTitle'>{ selMonth != 12 ? selMonth + 1 + "월 물품추가" : "" }</p>
               <p>제품명<input type='text' name='pName' ref={pNameRef}/></p>
               <p>단가<input type='text' name='uPrice' ref={uPriceRef}/></p>
               <p>금액<input type='text' name='price' ref={priceRef}/></p>
@@ -82,9 +79,11 @@ export default function InsertInv(){
                     reader.onload = () => {
                       setBase(reader.result);
                     }
-                    event.target.files = [];
                   }}/>
                 </label>
+              </p>
+              <p id='formImg' >
+                <img src={base} />
               </p>
               
               <input type="submit" value="submit"/>

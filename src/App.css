@@ -74,7 +74,7 @@
 }
 
 #mainForm input[type=submit]{
-  margin: 10px;
+  
   width: 100px;
   height: 35px;
   font-size: 18px;
@@ -98,13 +98,24 @@
 }
 
 #rightForm{
-  margin: 10px 20px 30px 30px;
+  margin: -20px 20px 30px 30px;
 }
 
 #rightForm p{
   margin: 20px 0px;
   text-align: left;
   width: 260px;
+}
+
+#formImg{
+  margin-left: 20px;
+  width: 220px;
+  height: 100px;
+  overflow: hidden;
+}
+
+#formImg img{
+  width: 100%;
 }
 
 #formTitle{
@@ -139,6 +150,10 @@
 table{
   width: 100%;
   border-collapse: collapse;
+}
+
+table input{
+  text-align: center;
 }
 
 thead th{
@@ -197,6 +212,7 @@ tbody td, tbody input, tbody textarea{
 .dBtn{
   width: 80px;
   height: 80px;
+  padding: 10px;
   border: none;
   background-color: #EEF1FF;
   transition: all 0.2s;
