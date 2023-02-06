@@ -14,7 +14,7 @@ export default function InventoryBlock(){
         return state.inventory.invList;
     })
 
-    const selInventory = useFetch(`http://localhost:3001/invList/${selMonth != 12 ? selMonth : 0}/`);
+    const selInventory = useFetch(`http://localhost:3001/invList/${selMonth !== 12 ? selMonth : 0}/`);
     function deleteBlock(event, idx){
         event.preventDefault();
         const saveItemList = selInventory.itemList;
@@ -23,42 +23,20 @@ export default function InventoryBlock(){
         selInventory.itemList = newItemList;
 
         fetch(`http://localhost:3001/invList/${selMonth}`, {
-        method : "PUT",
-        headers : {
-          "Content-Type" : "application/json"
-        },
-        body : JSON.stringify(selInventory)
-      }).then(res => {
-        if(res.ok){
-          alert("상품이 삭제 되었습니다.");
-          
-        }
-      })
+            method : "PUT",
+            headers : {
+                "Content-Type" : "application/json"
+            },
+            body : JSON.stringify(selInventory)
+        }).then(res => {
+            if(res.ok){
+                alert("상품이 삭제 되었습니다.");
+            }
+        })
 
     }
     var modifyItemList = [];
-    window.onkeydown = (event)=>{
-        if(event.key === 's' && event.ctrlKey === true){
-            event.preventDefault();
-            console.log(modifyItemList);
-            console.log(selInventory.itemList);
-            selInventory.itemList = modifyItemList;
-            fetch(`http://localhost:3001/invList/${selMonth}`, {
-                method : "PUT",
-                headers : {
-                "Content-Type" : "application/json"
-                },
-                body : JSON.stringify(selInventory)
-                }).then(res => {
-                    if(res.ok){
-                    alert("변경사항이 저장 되었습니다.");
-                    
-                    }
-                });
-        } 
-    }
-
-    if(selInven.length > 0){
+    if(selInven.length > 0 && selInven[0].id !== -1){
         var block = [];
         for(let i = 0; i < selInven[0].itemList.length; i++){
             modifyItemList.push({pid : 0, pName : "", days : [[0,0,0],[0,0,0],[0,0,0],[0,0,0],
@@ -112,7 +90,7 @@ export default function InventoryBlock(){
                         }} defaultValue={selInven[0].itemList[i].pName}></textarea>
                         <div className='imgPopup'>
                             {selInven[0].itemList[i].pName}
-                            <img src={selInven[0].itemList[i].img}/>
+                            <img src={selInven[0].itemList[i].img} alt="product"/>
                         </div>
                     </td>
                 </tr>
@@ -156,6 +134,23 @@ export default function InventoryBlock(){
         }
         return <tbody>
                 {block}
+                <tr>
+                    <td colSpan="38"><input id='saveBtn' type="button" value="저장" onClick={()=>{
+                        selInventory.itemList = modifyItemList;
+                        fetch(`http://localhost:3001/invList/${selMonth}`, {
+                            method : "PUT",
+                            headers : {
+                            "Content-Type" : "application/json"
+                            },
+                            body : JSON.stringify(selInventory)
+                            }).then(res => {
+                                if(res.ok){
+                                alert("변경사항이 저장 되었습니다.");
+                                
+                                }
+                            });
+                                }}/></td>
+                </tr>
         </tbody>
     }
     return (

@@ -222,3 +222,56 @@ tbody td, tbody input, tbody textarea{
   background-color: #B1B2FF;
   color: #FFFFFF;
 }
+
+#monthGraph{
+  margin: 0 auto;
+  width: 1400px;
+  height: 400px;
+  background-color: #EEF1FF;
+  position: relative;
+}
+
+.horizontalHr{
+  margin-top: 38px;
+  margin-left: 0px;
+  width: 998px;
+}
+
+.verticalHr{
+  position: absolute;
+  margin-top: -210px;
+  margin-left: 80px;
+  height : 200px;
+  width: 1px;
+  border-width : 0;
+  color : #000;
+  background-color : #000;
+  float : left;
+}
+
+#mGrpahContorl{
+  margin : 20px auto;
+  width: 1000px;
+  height: 50px;
+}
+
+#mGrpahContorl input{
+  margin: 0 10px;
+  width: 60px;
+  height: 30px;
+  border: none;
+  background-color: #EEF1FF;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+#saveBtn{
+  width: 100%;
+  transition: all 0.2s;
+  height: 30px;
+}
+
+#mGrpahContorl input:hover, #saveBtn:hover{
+  background-color: #B1B2FF;
+  color: #FFFFFF;
+}
