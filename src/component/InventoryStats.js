@@ -4,7 +4,7 @@ import { Chart } from 'react-google-charts';
 import { asyncInvenFetch } from '../inventorySlice';
 
 export default function InventoryStats(){
-    const inventory = useSelector(state=>state.inventory.invList[0]);
+    const inventory = useSelector(state=>state.inventory2.invList[0]);
     const dispatch = useDispatch();
     const monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     let now = new Date();
