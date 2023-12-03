@@ -10,6 +10,9 @@ import { useEffect, useState } from 'react';
 
 // https://www.react-google-charts.com/examples/line-chart 
 // react google chart 사용법
+
+// 실행 명령어 npm run dev
+
 function App() { 
   const dispatch = useDispatch();
 
@@ -23,7 +26,8 @@ function App() {
   for(var i = 0; i < 31; i++){
     dayBlock.push(<th key={uuid()}>{i + 1}</th>)
   }
-
+  const inventory = useSelector(state=>state.inventory);
+  console.log(inventory)
   useEffect(()=>{
     if(selMonth !== 12){
       setMainContent(
