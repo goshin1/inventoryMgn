@@ -164,9 +164,9 @@
               30
             ]
           ],
-          "uPrice": 0,
-          "price": 1000,
-          "vat": 0,
+          "uPrice": 1220,
+          "price": 1222,
+          "vat": 20,
           "img": null
         },
         {
@@ -833,7 +833,7 @@
     },
     {
       "id": 1,
-      "nextPid": 1,
+      "nextPid": 2,
       "itemList": [
         {
           "pid": 0,
